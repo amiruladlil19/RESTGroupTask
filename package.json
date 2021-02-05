@@ -1,0 +1,14 @@
+{
+  "name": "restgrouptask",
+  "version": "1.0.0",
+  "description": "for group task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kelompok2",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
