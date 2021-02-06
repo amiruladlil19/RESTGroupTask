@@ -4,7 +4,7 @@ const app = express.Router()
 
 
 app.get('/transaction/', (req, res) => {
-    res.send(transactionDB)
+    res.send(db)
 });
 
 app.get('/transaction/:id', (req, res) => {
@@ -22,11 +22,16 @@ app.get('/transaction/:id', (req, res) => {
     });
 });
 
+app.post('/transaction/', (req, res) => {
+    db.push(req.body);
+    res.send(req.body)
+})
+
 app.put('/transaction/:index', (req, res) => {
     const index = req.params.index
     if (!Number(index)) {
         res.status(400).send('Please input a number')
-    } else if ((transactionDB.length - 1) < index) {
+    } else if ((db.length - 1) < index) {
         res.status(400).send('Out of index')
     } else {
         db[req.params.index] = req.body
@@ -34,9 +39,9 @@ app.put('/transaction/:index', (req, res) => {
     }
 });
 
-app.delete('/item/:index', (req, res) => {
+app.delete('/transaction/:index', (req, res) => {
     const index = req.params.index
-    const deletedItem = transactionDB.splice(index, 1);
+    const deletedItem = db.splice(index, 1);
     res.send(deletedItem);
 });
 
