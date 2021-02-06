@@ -7,7 +7,11 @@ app.get('/friend', (req, res) => {
 })
 
 app.get('/friend/:id', (req, res) => {
-    res.send(db[req.params.id - 1]);
+    if (req.params.id > db.length) {
+        res.status(404).send('item not found or does not exist');
+    } else {
+        res.send(db[req.params.id - 1])
+    }
 })
 
 
