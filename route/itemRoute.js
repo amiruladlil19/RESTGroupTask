@@ -1,25 +1,31 @@
 const express = require("express");
-const dbitem = require("../dbitem");
-const db = require("../dbitem");
+const db = require("../database/db_item");
 const app = express.Router()
+
+function findId(db, itemId){
+    const result = db.find(({id}) => id == itemId)
+    return result
+}
 
 app.get('/item/', (req, res) => {
     res.send(db)
 })
 
 app.get('/item/:id', (req, res) => {
-    const id = parseInt(req.params.id, 10);
-    db.map((item) => {
-        if (item.id === id) {
-            return res.status(200).send({
-                item,
-            });
-        }
-    });
-    return res.status(404).send({
-        error: 'false',
-        message: 'item does not exist',
-    });
+    const id = findId(db, req.params.id)
+    id ? res.status(200).send(id) : res.status(404).send('item does not exist')
+//     const id = parseInt(req.params.id, 10);
+//     db.map((item) => {
+//         if (item.id === id) {
+//             return res.status(200).send({
+//                 item,
+//             });
+//         }
+//     });
+//     return res.status(404).send({
+//         error: 'false',
+//         message: 'item does not exist',
+//     });
 })
 
 app.post('/item/', (req, res) => {
