@@ -1,5 +1,5 @@
 const express = require("express");
-const transactionDB = require("../database/db_transaction");
+const db = require("../database/db_transaction");
 const app = express.Router()
 
 
@@ -7,7 +7,7 @@ app.get('/transaction/', (req, res) => {
     res.send(transactionDB)
 });
 
-app.get('/item/:id', (req, res) => {
+app.get('/transaction/:id', (req, res) => {
     const id = parseInt(req.params.id, 10);
     db.map((item) => {
         if (item.id === id) {
