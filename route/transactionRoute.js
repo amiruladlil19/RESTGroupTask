@@ -27,11 +27,11 @@ app.post('/transaction/', (req, res) => {
     res.send(req.body)
 })
 
-app.put('/transaction/:id', (req, res) => {
+app.put('/transaction/:index', (req, res) => {
     const index = req.params.index
     if (!Number(index)) {
         res.status(400).send('Please input a number')
-    } else if ((transactionDB.length - 1) < index) {
+    } else if ((db.length - 1) < index) {
         res.status(400).send('Out of index')
     } else {
         db[req.params.index] = req.body
@@ -39,9 +39,9 @@ app.put('/transaction/:id', (req, res) => {
     }
 });
 
-app.delete('/transaction/:id', (req, res) => {
+app.delete('/transaction/:index', (req, res) => {
     const index = req.params.index
-    const deletedItem = transactionDB.splice(index, 1);
+    const deletedItem = db.splice(index, 1);
     res.send(deletedItem);
 });
 
