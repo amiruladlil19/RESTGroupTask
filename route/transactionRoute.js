@@ -4,7 +4,7 @@ const app = express.Router()
 
 
 app.get('/transaction/', (req, res) => {
-    res.send(transactionDB)
+    res.send(db)
 });
 
 app.get('/transaction/:id', (req, res) => {
@@ -22,7 +22,12 @@ app.get('/transaction/:id', (req, res) => {
     });
 });
 
-app.put('/transaction/:index', (req, res) => {
+app.post('/transaction/', (req, res) => {
+    db.push(req.body);
+    res.send(req.body)
+})
+
+app.put('/transaction/:id', (req, res) => {
     const index = req.params.index
     if (!Number(index)) {
         res.status(400).send('Please input a number')
@@ -34,7 +39,7 @@ app.put('/transaction/:index', (req, res) => {
     }
 });
 
-app.delete('/item/:index', (req, res) => {
+app.delete('/transaction/:id', (req, res) => {
     const index = req.params.index
     const deletedItem = transactionDB.splice(index, 1);
     res.send(deletedItem);
