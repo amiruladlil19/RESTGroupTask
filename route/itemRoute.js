@@ -37,6 +37,11 @@ app.post('/item/',validateItem, (req, res) => {
                 status: "400 Bad Request",
                 message: "item id already exist"
             })
+        } else if (fn.isNegativeNumber(req.body.id)) {
+            res.status(400).json({
+                status: "400 Bad Request",
+                message: "id cannot be negative number"
+            })
         } else if (!fn.isIdExist(db_user, req.body.userId)) {
             res.status(400).json({
                 status: "400 Bad Request",
@@ -57,6 +62,11 @@ app.put('/item/:id', validateItem, (req, res) => {
             res.status(400).json({
                 status: "400 Bad Request",
                 messages: errors.array().map(obj => `${obj.param} = ${obj.msg}`)
+            })
+        } else if (fn.isNegativeNumber(req.body.id)) {
+            res.status(400).json({
+                status: "400 Bad Request",
+                message: "id cannot be negative number"
             })
         } else {
             db_item[fn.findIndexFromId(db_item, req.params.id)] = req.body
