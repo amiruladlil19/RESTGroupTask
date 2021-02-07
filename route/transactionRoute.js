@@ -60,7 +60,7 @@ app.post('/transaction', validateTransaction, (req, res) => {
             })
         }
         else {
-            db_friend.push(req.body)
+            db_transaction.push(req.body)
             res.send(req.body)
         }
     }
