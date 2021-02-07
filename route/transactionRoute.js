@@ -1,5 +1,3 @@
-
-
 const express = require("express");
 const { validationResult } = require("express-validator");
 const db_friend = require("../database/db_friend");
@@ -104,7 +102,26 @@ app.put('/transaction/:id', validateTransaction, (req, res) => {
                     status: "400 Bad Request",
                     messages: errors.array().map(obj => `${obj.param} = ${obj.msg}`)
                 })
-            } else if (fn.isNegativeNumber(req.body.nominal)) {
+            }
+            else if (!fn.isIdExist(db_user, req.body.userId)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "user id does not exist"
+                })
+            }
+            else if (!fn.isIdExist(db_friend, req.body.friendId)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "friend id does not exist"
+                })
+            }
+            else if (!fn.isIdExist(db_item, req.body.itemId)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "item id does not exist"
+                })
+            }
+            else if (fn.isNegativeNumber(req.body.nominal)) {
                 res.status(400).json({
                     status: "400 Bad Request",
                     message: "nominal cannot be negative number"
@@ -141,4 +158,3 @@ app.delete('/transaction/:id', (req, res) => {
 
 
 module.exports = app
-
