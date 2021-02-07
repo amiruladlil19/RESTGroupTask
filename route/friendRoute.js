@@ -40,4 +40,5 @@ app.delete('/friend/:index', (req, res) => {
     res.send(deletedItem)
 })
 
+
 module.exports = app

@@ -4,11 +4,21 @@
   "description": "for group task",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon -L index.js"
   },
   "author": "kelompok2",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amiruladlil19/RESTGroupTask.git"
+  },
+  "bugs": {
+    "url": "https://github.com/amiruladlil19/RESTGroupTask/issues"
+  },
+  "homepage": "https://github.com/amiruladlil19/RESTGroupTask#readme"
 }
