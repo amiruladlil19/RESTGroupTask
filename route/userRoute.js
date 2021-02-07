@@ -1,10 +1,10 @@
 const express = require("express");
 const db_user = require("../database/db_user");
-const db = require("../database/db_user");
 const app = express.Router()
 
 function isUserExist(id, username) {
-    if (db_user.some(db => db.id == id || db.username == username)) return true;
+    if (db_user.some(db_user => db_user.id == id || db_user.username == username)) return true;
+
     else return false;
 }
 

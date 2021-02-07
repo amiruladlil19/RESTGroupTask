@@ -1,3 +1,4 @@
+
 const express = require("express");
 const db = require("../database/db_item");
 const fn = require('../function/functions');
@@ -46,7 +47,6 @@ app.delete('/item/:index', (req, res) => {
     const deletedItem = db.splice(index, 1)
     res.send(deletedItem)
 })
-
 
 
 module.exports = app
