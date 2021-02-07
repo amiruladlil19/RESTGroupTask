@@ -53,10 +53,10 @@ app.post('/transaction/', (req, res) => {
 
 app.put('/transaction/:index', (req, res) => {
     const index = req.params.index
-    if (!Number(index)) {
+    if (isNaN(index)) {
         res.status(400).send('Input number please')
-    } else if ((db.length - 1) < index) {
-        res.status(400).send('Cannot found number of item')
+    } else if (index < 0 || (db.length - 1) < index) {
+        res.status(400).send('Cannot found the transaction')
     } else if (isIdExist(req.body.id)) {
         res.send('Id is already use')
     }
