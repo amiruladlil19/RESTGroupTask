@@ -21,9 +21,20 @@ function isIdExist(id) {
     else return false;
 }
 
+function isDataRight(itemdb){
+    if(item in itemdb
+        && 'id' in itemdb
+        && 'userId' in itemdb
+        && 'name' in itemdb
+    ) return true;
+    else return false;
+}
+
 app.post('/item/', (req, res) => {
     if (isIdExist(req.body.id)) {
         res.send('Id is already use')
+    } else if (isDataRight(req.body) == false){
+        res.send('Complete the data')
     } else {
         db.push(req.body)
         res.send(req.body)
@@ -38,6 +49,8 @@ app.put('/item/:index', (req, res) => {
         res.status(400).send('Cannot found number of item')
     } else if (isIdExist(req.body.id)) {
         res.send('Id is already use')
+    } else if (isDataRight(req.body) == false){
+        res.send('Complete the data')
     } else {
         db[req.params.index] = req.body
         res.send(req.body)
