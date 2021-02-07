@@ -55,7 +55,14 @@ app.post('/transaction', validateTransaction, (req, res) => {
                     status: "400 Bad Request",
                     message: "transaction id already exist"
                 })
-            } else if (!fn.isIdExist(db_user, req.body.userId)) {
+            } 
+            else if (fn.isNegativeNumber(req.body.id)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "id cannot be negative number"
+                })
+            }
+            else if (!fn.isIdExist(db_user, req.body.userId)) {
                 res.status(400).json({
                     status: "400 Bad Request",
                     message: "user id does not exist"
@@ -103,6 +110,12 @@ app.put('/transaction/:id', validateTransaction, (req, res) => {
                     messages: errors.array().map(obj => `${obj.param} = ${obj.msg}`)
                 })
             }
+            else if (fn.isNegativeNumber(req.body.id)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "id cannot be negative number"
+                })
+            } 
             else if (!fn.isIdExist(db_user, req.body.userId)) {
                 res.status(400).json({
                     status: "400 Bad Request",
