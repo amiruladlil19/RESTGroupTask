@@ -70,5 +70,21 @@ app.post('/login', validateLogin, (req, res) => {
     }
 })
 
+app.post('/logout', (req, res) => {
+    console.log(req.session);
+    if (req.session.authenticated) {
+        req.session = null
+        res.status(200).json({
+            status: "200 OK",
+            message: "Log out succesful"
+        })
+    } else {
+        res.status(401).json({
+            status: "401 Unauthorized",
+            message: "Not logged in"
+        })
+    }
+})
+
 
 module.exports = app
