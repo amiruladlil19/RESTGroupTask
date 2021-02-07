@@ -7,6 +7,7 @@ exports.validateRegister = [
     body('username', 'Must a string').isString(),
     body('username', 'Must be minimal 6 characters').isLength({ min: 6 }),
     body('username', 'Must be maximal 12 characters').isLength({ max: 12 }),
+    body('password', 'Cannot be empty').notEmpty(),
     body('password', 'Must be minimal 8 characters').isLength({ min: 8 }),
     body('password', 'Must be maximal 16 characters').isLength({ max: 16 })
 ]
@@ -27,4 +28,17 @@ exports.validateFriend = [
     body('name', 'Cannot be empty').notEmpty(),
     body('name', 'Must be minimal 3 characters').isLength({ min: 3 }),
     body('name', 'Must be maximal 30 characters').isLength({ max: 30 })
+]
+
+exports.validateTransaction = [
+    body('id', 'Nan').isNumeric(),
+    body('id', 'Cannot be empty').notEmpty(),
+    body('userId', 'Cannot be empty').notEmpty(),
+    body('userId', 'NaN').isNumeric(),
+    body('friendId', 'NaN').isNumeric(),
+    body('friendId', 'Cannot be empty').notEmpty(),
+    body('itemId', 'NaN').isNumeric(),
+    body('itemId', 'Cannot be empty').notEmpty(),
+    body('nominal', 'NaN').isNumeric(),
+    body('nominal', 'Cannot be empty').notEmpty()
 ]
