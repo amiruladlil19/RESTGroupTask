@@ -59,6 +59,12 @@ app.post('/transaction', validateTransaction, (req, res) => {
                 message: "item id does not exist"
             })
         }
+        else if (fn.isNegativeNumber(req.body.nominal)) {
+            res.status(400).json({
+                status: "400 Bad Request",
+                message: "nominal cannot be negative number"
+            })
+        }
         else {
             db_transaction.push(req.body)
             res.send(req.body)
