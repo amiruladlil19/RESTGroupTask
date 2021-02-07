@@ -11,6 +11,12 @@ function isCorrect(db, id, username, password) {
     return result
 }
 
+function isPasswordCorrect(db, id, username, password) {
+    intId = parseInt(id, 10)
+    const result = db.some(user => user.id === intId && user.username == username && user.password != password)
+    return result
+}
+
 function isFrienIdExist(db, userId) {
     const result = db.find(({ id }) => id == userId)
     return result;
@@ -49,8 +55,8 @@ function isIdExist(db, id) {
     else return false;
 }
 
-function isItemDataComplete(itemdb){
-    if('id' in itemdb
+function isItemDataComplete(itemdb) {
+    if ('id' in itemdb
         && 'userId' in itemdb
         && 'name' in itemdb
     ) return true;
@@ -67,7 +73,8 @@ module.exports = {
     isItemIdExist,
     isNumber,
     isOutOfRange,
+    isDataComplete,
+    isPasswordCorrect,
     isIdExist,
-    isItemDataComplete,
-    isDataComplete
+    isItemDataComplete
 }
