@@ -123,7 +123,7 @@ app.put('/transaction/:id', validateTransaction, (req, res) => {
 
 app.delete('/transaction/:id', (req, res) => {
     if (req.session.authenticated) {
-        const deletedItem = db_friend.splice(fn.findIndexFromId(db_friend, req.params.id), 1)
+        const deletedItem = db_transaction.splice(fn.findIndexFromId(db_transaction, req.params.id), 1)
         res.send(deletedItem)
     } else {
         res.status(403).json({
