@@ -22,6 +22,11 @@ app.post('/register', validateRegister, (req, res) => {
                 status: "400 Bad Request",
                 message: "id or username already exists"
             })
+        } else if (fn.isNegativeNumber(req.body.id)) {
+            res.status(400).json({
+                status: "400 Bad Request",
+                message: "id cannot be negative number"
+            })
         } else {
             db_user.push(req.body)
             res.send(req.body)
