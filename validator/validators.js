@@ -28,3 +28,16 @@ exports.validateFriend = [
     body('name', 'Must be minimal 3 characters').isLength({ min: 3 }),
     body('name', 'Must be maximal 30 characters').isLength({ max: 30 })
 ]
+
+exports.validateTransaction = [
+    body('id', 'Nan').isNumeric(),
+    body('id', 'Cannot be empty').notEmpty(),
+    body('userId', 'Cannot be empty').notEmpty(),
+    body('userId', 'NaN').isNumeric(),
+    body('friendId', 'NaN').isNumeric(),
+    body('friendId', 'Cannot be empty').notEmpty(),
+    body('itemId', 'NaN').isNumeric(),
+    body('itemId', 'Cannot be empty').notEmpty(),
+    body('nominal', 'NaN').isNumeric(),
+    body('nominal', 'Cannot be empty').notEmpty()
+]
