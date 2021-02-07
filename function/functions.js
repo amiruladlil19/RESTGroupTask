@@ -33,6 +33,21 @@ function isOutOfRange(db, index) {
     return (((db.length - 1) < index ? true : false) || index < 0 ? true : false)
 }
 
+function isIdExist(db, id) {
+    if (db.some(db => db.id == id)) return true;
+    else return false;
+}
+
+function isItemDataComplete(itemdb){
+    if('id' in itemdb
+        && 'userId' in itemdb
+        && 'name' in itemdb
+    ) return true;
+    else return false;
+}
+
+
+
 module.exports = {
     isUserExist,
     isCorrect,
@@ -40,5 +55,7 @@ module.exports = {
     isTransactionIdExist,
     isItemIdExist,
     isNumber,
-    isOutOfRange
+    isOutOfRange,
+    isIdExist,
+    isItemDataComplete
 }
