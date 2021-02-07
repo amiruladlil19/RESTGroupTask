@@ -1,3 +1,4 @@
+
 const express = require("express");
 const db = require("../database/db_transaction");
 const app = express.Router()
@@ -74,6 +75,7 @@ app.delete('/transaction/:index', (req, res) => {
     const deletedItem = db.splice(index, 1)
     res.send(deletedItem)
 })
+
 
 
 
