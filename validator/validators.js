@@ -42,3 +42,13 @@ exports.validateTransaction = [
     body('nominal', 'NaN').isNumeric(),
     body('nominal', 'Cannot be empty').notEmpty()
 ]
+exports.validateItem = [
+    body('id', 'NaN').isNumeric(),
+    body('id', 'Cannot be empty').notEmpty(),
+    body('userId', 'NaN').isNumeric(),
+    body('userId', 'Cannot be empty').notEmpty(),
+    body('name', 'Must a string').isString(),
+    body('name', 'Cannot be empty').notEmpty(),
+    body('name', 'Must be minimal 3 characters').isLength({ min: 3 }),
+    body('name', 'Must be maximal 30 characters').isLength({ max: 30 })
+]

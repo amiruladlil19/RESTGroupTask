@@ -8,10 +8,5 @@ module.exports = [
         id: 2,
         userId: 2,
         name: "Baskom"
-    },
-    {
-        id: 3,
-        userId: 3,
-        name: "Ember"
-    },
+    }
 ]
