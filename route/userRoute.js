@@ -4,6 +4,7 @@ const app = express.Router()
 
 function isUserExist(id, username) {
     if (db_user.some(db_user => db_user.id == id || db_user.username == username)) return true;
+
     else return false;
 }
 
