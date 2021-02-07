@@ -30,9 +30,18 @@ app.post('/register', (req, res) => {
 //     });
 // }
 
+// function password(db_user, id, username, password) {
+//     intId = parseInt(id, 10)
+//     const result = db_user.some(user => user.id === intId && user.username == username && user.password != password)
+//     return result
+// }
+
 app.post('/login', (req, res) => {
     if (exfunction.isCorrect(db_user, req.body.id, req.body.username, req.body.password)) {
         res.send('login success')
+    } else if (exfunction.isPasswordCorrect(db_user, req.body.id, req.body.username, req.body.password)) {
+        res.status(401).send(`Password incorrect
+        Please enter the correct password`)
     } else {
         res.status(401).send(`id, username, or password incorrect
         Please register first`)

@@ -10,6 +10,12 @@ function isCorrect(db, id, username, password) {
     return result
 }
 
+function isPasswordCorrect(db, id, username, password) {
+    intId = parseInt(id, 10)
+    const result = db.some(user => user.id === intId && user.username == username && user.password != password)
+    return result
+}
+
 function isFrienIdExist(db, userId) {
     const result = db.find(({ id }) => id == userId)
     return result;
@@ -51,5 +57,6 @@ module.exports = {
     isItemIdExist,
     isNumber,
     isOutOfRange,
-    isDataComplete
+    isDataComplete,
+    isPasswordCorrect
 }
