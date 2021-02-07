@@ -13,89 +13,124 @@ const { validateTransaction } = require("../validator/validators");
 
 
 app.get('/transaction/', (req, res) => {
-    res.send(db)
+    if (req.session.authenticated) {
+        res.send(db)
+    } else {
+        res.status(403).json({
+            status: "403 Forbidden",
+            message: "You need to log in first"
+        })
+    }
 })
 
 app.get('/transaction/:id', (req, res) => {
-    const id = fn.isItemIdExist(db_transaction, req.params.id)
-    if (id) {
-        res.status(200).send(id)
+    if (req.session.authenticated) {
+        const id = fn.isItemIdExist(db_transaction, req.params.id)
+        if (id) {
+            res.status(200).send(id)
+        } else {
+            res.status(404).json({
+                status: "404 Not Found",
+                message: "transaction not found or does not exist"
+            })
+        }
     } else {
-        res.status(404).json({
-            status: "404 Not Found",
-            message: "transaction not found or does not exist"
+        res.status(403).json({
+            status: "403 Forbidden",
+            message: "You need to log in first"
         })
     }
 })
 
 app.post('/transaction', validateTransaction, (req, res) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-        res.status(400).json({
-            status: "400 Bad Request",
-            message: errors.array().map(obj => `${obj.param} = ${obj.msg}`)
-        })
+    if (req.session.authenticated) {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            res.status(400).json({
+                status: "400 Bad Request",
+                message: errors.array().map(obj => `${obj.param} = ${obj.msg}`)
+            })
+        } else {
+            if (fn.isIdExist(db_transaction, req.body.id)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "transaction id already exist"
+                })
+            } else if (!fn.isIdExist(db_user, req.body.userId)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "user id does not exist"
+                })
+            }
+            else if (!fn.isIdExist(db_friend, req.body.friendId)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "friend id does not exist"
+                })
+            }
+            else if (!fn.isIdExist(db_item, req.body.itemId)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "item id does not exist"
+                })
+            }
+            else if (fn.isNegativeNumber(req.body.nominal)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "nominal cannot be negative number"
+                })
+            }
+            else {
+                db_transaction.push(req.body)
+                res.send(req.body)
+            }
+        }
     } else {
-        if (fn.isIdExist(db_transaction, req.body.id)) {
-            res.status(400).json({
-                status: "400 Bad Request",
-                message: "transaction id already exist"
-            })
-        } else if (!fn.isIdExist(db_user, req.body.userId)) {
-            res.status(400).json({
-                status: "400 Bad Request",
-                message: "user id does not exist"
-            })
-        }
-        else if (!fn.isIdExist(db_friend, req.body.friendId)) {
-            res.status(400).json({
-                status: "400 Bad Request",
-                message: "friend id does not exist"
-            })
-        }
-        else if (!fn.isIdExist(db_item, req.body.itemId)) {
-            res.status(400).json({
-                status: "400 Bad Request",
-                message: "item id does not exist"
-            })
-        }
-        else if (fn.isNegativeNumber(req.body.nominal)) {
-            res.status(400).json({
-                status: "400 Bad Request",
-                message: "nominal cannot be negative number"
-            })
-        }
-        else {
-            db_transaction.push(req.body)
-            res.send(req.body)
-        }
+        res.status(403).json({
+            status: "403 Forbidden",
+            message: "You need to log in first"
+        })
     }
 })
 
 app.put('/transaction/:id', validateTransaction, (req, res) => {
-    const errors = validationResult(req)
+    if (req.authenticated.session) {
+        const errors = validationResult(req)
 
-    if (fn.isIdExist(db_transaction, req.params.id)) {
-        if (!errors.isEmpty()) {
-            res.status(400).json({
-                status: "400 Bad Request",
-                messages: errors.array().map(obj => `${obj.param} = ${obj.msg}`)
-            })
+        if (fn.isIdExist(db_transaction, req.params.id)) {
+            if (!errors.isEmpty()) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    messages: errors.array().map(obj => `${obj.param} = ${obj.msg}`)
+                })
+            } else {
+                db_transaction[fn.findIndexFromId(db_transaction, req.params.id)] = req.body
+                res.send(req.body)
+            }
         } else {
-            db_transaction[fn.findIndexFromId(db_transaction, req.params.id)] = req.body
-            res.send(req.body)
+            res.status(404).json({
+                status: "404 Not Found",
+                message: "transaction id not found"
+            })
         }
     } else {
-        res.status(404).json({
-            status: "404 Not Found",
-            message: "transaction id not found"
+        res.status(403).json({
+            status: "403 Forbidden",
+            message: "You need to log in first"
         })
     }
 })
 
 app.delete('/transaction/:id', (req, res) => {
-    const deletedItem = db_friend.splice(fn.findIndexFromId(db_friend, req.params.id), 1)
-    res.send(deletedItem)
+    if (req.session.authenticated) {
+        const deletedItem = db_friend.splice(fn.findIndexFromId(db_friend, req.params.id), 1)
+        res.send(deletedItem)
+    } else {
+        res.status(403).json({
+            status: "403 Forbidden",
+            message: "You need to log in first"
+        })
+    }
 })
 
 

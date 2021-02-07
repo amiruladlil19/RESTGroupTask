@@ -1,12 +1,18 @@
 
 const express = require("express");
 const app = express();
+const cookieSession = require('cookie-session');
 const itemRoute = require('./route/itemRoute');
 const friendRoute = require('./route/friendRoute');
 const transactionRoute = require('./route/transactionRoute');
 const userRoute = require('./route/userRoute');
 const rootRoute = require('./route/rootRoute');
 const errorRoute = require('./route/errorRoute');
+
+app.use(cookieSession({
+    name: 'session',
+    keys: ['key1']
+}))
 
 app.use(express.json()); // middleware
 app.use(itemRoute);

@@ -5,8 +5,15 @@ const app = express.Router()
 const fn = require("../function/functions");
 const { validateRegister, validateLogin } = require("../validator/validators");
 
-app.get('/register', (req, res) => {
-    res.send(db_user)
+app.get('/users', (req, res) => {
+    if (req.session.username == 'admin01') {
+        res.send(db_user)
+    } else {
+        res.status(403).json({
+            status: "403 Forbidden",
+            message: "You need to log in as admin first"
+        })
+    }
 })
 
 app.post('/register', validateRegister, (req, res) => {
@@ -43,6 +50,8 @@ app.post('/login', validateLogin, (req, res) => {
         })
     } else {
         if (fn.isCorrect(db_user, req.body.id, req.body.username, req.body.password)) {
+            req.session.authenticated = true
+            req.session.username = req.body.username
             res.status(200).json({
                 status: "200 OK",
                 message: "Login succesful"
