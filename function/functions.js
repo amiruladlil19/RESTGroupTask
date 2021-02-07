@@ -33,6 +33,16 @@ function isOutOfRange(db, index) {
     return (((db.length - 1) < index ? true : false) || index < 0 ? true : false)
 }
 
+function isDataComplete(newData) {
+    if ('nominal' in newData
+        && 'itemId' in newData
+        && 'id' in newData
+        && 'userId' in newData
+        && 'friendId' in newData) return true;
+
+    else return false;
+}
+
 module.exports = {
     isUserExist,
     isCorrect,
@@ -40,5 +50,6 @@ module.exports = {
     isTransactionIdExist,
     isItemIdExist,
     isNumber,
-    isOutOfRange
+    isOutOfRange,
+    isDataComplete
 }

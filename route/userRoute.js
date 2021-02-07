@@ -2,6 +2,10 @@ const express = require("express");
 const db_user = require("../database/db_user");
 const app = express.Router()
 
+app.get('/register', (req, res) => {
+    res.send(db_user)
+})
+
 function isUserExist(id, username) {
     if (db_user.some(db_user => db_user.id == id || db_user.username == username)) return true;
 
@@ -13,7 +17,7 @@ app.post('/register', (req, res) => {
     if (isUserExist(req.body.id, req.body.username)) {
         res.send('UserId or Username is already use')
     } else {
-        db.push(req.body)
+        db_user.push(req.body)
         res.send(req.body)
     }
 })
