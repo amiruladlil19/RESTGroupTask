@@ -75,4 +75,5 @@ module.exports = {
     isOutOfRange,
     isDataComplete,
     isPasswordCorrect,
+    isIdExist,
     isItemDataComplete
