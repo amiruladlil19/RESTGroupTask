@@ -17,6 +17,11 @@ function isPasswordCorrect(db, id, username, password) {
     return result
 }
 
+function findIndexFromId(db, inputedId) {
+    const index = db.findIndex(({ id }) => id == inputedId)
+    return index
+}
+
 function isFrienIdExist(db, userId) {
     const result = db.find(({ id }) => id == userId)
     return result;
@@ -68,6 +73,7 @@ function isItemDataComplete(itemdb) {
 module.exports = {
     isUserExist,
     isCorrect,
+    findIndexFromId,
     isFrienIdExist,
     isTransactionIdExist,
     isItemIdExist,
