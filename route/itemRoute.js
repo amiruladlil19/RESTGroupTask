@@ -2,7 +2,7 @@ const express = require("express");
 const db = require("../database/db_item");
 const app = express.Router()
 
-function findId(db, itemId) {
+function isItemIdExist(db, itemId) {
     const result = db.find(({ id }) => id == itemId)
     return result
 }
@@ -12,7 +12,7 @@ app.get('/item/', (req, res) => {
 })
 
 app.get('/item/:id', (req, res) => {
-    const id = findId(db, req.params.id)
+    const id = isItemIdExist(db, req.params.id)
     id ? res.status(200).send(id) : res.status(404).send('item does not exist')
 })
 
@@ -21,9 +21,8 @@ function isIdExist(id) {
     else return false;
 }
 
-function isDataRight(itemdb){
-    if(item in itemdb
-        && 'id' in itemdb
+function isItemDataComplete(itemdb){
+    if('id' in itemdb
         && 'userId' in itemdb
         && 'name' in itemdb
     ) return true;
@@ -33,7 +32,7 @@ function isDataRight(itemdb){
 app.post('/item/', (req, res) => {
     if (isIdExist(req.body.id)) {
         res.send('Id is already use')
-    } else if (isDataRight(req.body) == false){
+    } else if (isItemDataComplete(req.body) == false){
         res.send('Complete the data')
     } else {
         db.push(req.body)
@@ -43,13 +42,13 @@ app.post('/item/', (req, res) => {
 
 app.put('/item/:index', (req, res) => {
     const index = req.params.index
-    if (!Number(index)) {
+    if (isNaN(index)) {
         res.status(400).send('Input number please')
     } else if ((db.length - 1) < index) {
         res.status(400).send('Cannot found number of item')
     } else if (isIdExist(req.body.id)) {
         res.send('Id is already use')
-    } else if (isDataRight(req.body) == false){
+    } else if (isItemDataComplete(req.body) == false){
         res.send('Complete the data')
     } else {
         db[req.params.index] = req.body
