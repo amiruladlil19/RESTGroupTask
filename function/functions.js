@@ -37,12 +37,8 @@ function isItemIdExist(db, itemId) {
     return result
 }
 
-function isNumber(index) {
-    return (isNaN(index) ? false : true)
-}
-
-function isOutOfRange(db, index) {
-    return (((db.length - 1) < index ? true : false) || index < 0 ? true : false)
+function isNegativeNumber(id) {
+    return (id < 0 ? true : false)
 }
 
 function isDataComplete(newData) {
@@ -77,8 +73,7 @@ module.exports = {
     isFrienIdExist,
     isTransactionIdExist,
     isItemIdExist,
-    isNumber,
-    isOutOfRange,
+    isNegativeNumber,
     isDataComplete,
     isPasswordCorrect,
     isIdExist,
