@@ -1,3 +1,4 @@
+
 function isUserExist(db, id, username) {
     intId = parseInt(id, 10)
     const result = db.some(user => user.id === id || user.username == username)
@@ -43,6 +44,21 @@ function isDataComplete(newData) {
     else return false;
 }
 
+function isIdExist(db, id) {
+    if (db.some(db => db.id == id)) return true;
+    else return false;
+}
+
+function isItemDataComplete(itemdb){
+    if('id' in itemdb
+        && 'userId' in itemdb
+        && 'name' in itemdb
+    ) return true;
+    else return false;
+}
+
+
+
 module.exports = {
     isUserExist,
     isCorrect,
@@ -51,5 +67,7 @@ module.exports = {
     isItemIdExist,
     isNumber,
     isOutOfRange,
+    isIdExist,
+    isItemDataComplete,
     isDataComplete
 }
