@@ -1,4 +1,5 @@
 
+
 const express = require("express");
 const { validationResult } = require("express-validator");
 const db_friend = require("../database/db_friend");
@@ -94,7 +95,7 @@ app.post('/transaction', validateTransaction, (req, res) => {
 })
 
 app.put('/transaction/:id', validateTransaction, (req, res) => {
-    if (req.authenticated.session) {
+    if (req.session.authenticated) {
         const errors = validationResult(req)
 
         if (fn.isIdExist(db_transaction, req.params.id)) {
@@ -102,6 +103,11 @@ app.put('/transaction/:id', validateTransaction, (req, res) => {
                 res.status(400).json({
                     status: "400 Bad Request",
                     messages: errors.array().map(obj => `${obj.param} = ${obj.msg}`)
+                })
+            } else if (fn.isNegativeNumber(req.body.nominal)) {
+                res.status(400).json({
+                    status: "400 Bad Request",
+                    message: "nominal cannot be negative number"
                 })
             } else {
                 db_transaction[fn.findIndexFromId(db_transaction, req.params.id)] = req.body
@@ -135,3 +141,4 @@ app.delete('/transaction/:id', (req, res) => {
 
 
 module.exports = app
+
