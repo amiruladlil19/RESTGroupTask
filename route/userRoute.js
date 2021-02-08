@@ -24,7 +24,12 @@ app.post('/register', validateRegister, (req, res) => {
             messages: errors.array().map(obj => `${obj.param} = ${obj.msg}`)
         })
     } else {
-        if (fn.isUserExist(db_user, req.body.id, req.body.username)) {
+        if (fn.isContainSpecialChars(req.body.username)) {
+            res.status(400).json({
+                status: "400 Bad Request",
+                message: "only username with alphanumeric are accepted"
+            })
+        } else if (fn.isUserExist(db_user, req.body.id, req.body.username)) {
             res.status(400).json({
                 status: "400 Bad Request",
                 message: "id or username already exists"
@@ -71,7 +76,6 @@ app.post('/login', validateLogin, (req, res) => {
 })
 
 app.post('/logout', (req, res) => {
-    console.log(req.session);
     if (req.session.authenticated) {
         req.session = null
         res.status(200).json({
