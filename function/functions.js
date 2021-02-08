@@ -41,6 +41,12 @@ function isNegativeNumber(id) {
     return (id < 0 ? true : false)
 }
 
+function isContainSpecialChars(username) {
+    const regex = /^[A-Za-z0-9 ]+$/
+    const result = regex.test(username)
+    return !result
+}
+
 function isDataComplete(newData) {
     if ('nominal' in newData
         && 'itemId' in newData
@@ -74,6 +80,7 @@ module.exports = {
     isTransactionIdExist,
     isItemIdExist,
     isNegativeNumber,
+    isContainSpecialChars,
     isDataComplete,
     isPasswordCorrect,
     isIdExist,
